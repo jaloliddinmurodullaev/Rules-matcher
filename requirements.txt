@@ -1,3 +1,7 @@
 fastapi
 uvicorn[standard]
 requests
+redis
+aiohttp
+python-dotenv
+

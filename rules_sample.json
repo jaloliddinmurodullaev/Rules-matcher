@@ -1,0 +1,155 @@
+{
+    "status": "success",
+    "call_id": "5f5f8878-6373-4c64-928d-2f43cc519913",
+    "call_time": "2024-02-22T06:04:54.283464Z",
+    "message": "Все ок.",
+    "code": 0,
+    "data": {
+        "rules": [
+            {
+                
+                    "id": 1,
+                    "title": "Правила 1",
+                    "type": "search",
+                    "category": 131,
+                    "rule": "if37",
+                    "conditions": [
+                        37
+                    ],
+                    "conditions_data": [
+                        {
+                            "id": 37,
+                            "rule": 20,
+                            "event": 10,
+                            "operator": {
+                                "value": "!=",
+                                "title": "не равно"
+                            },
+                            "fields": [
+                                {
+                                    "field_code": "provider",
+                                    "values": [
+                                        {
+                                            "title": "PROVIDER 1",
+                                            "value": "94fa3511-785f-4269-b97c-1d260cc0200f"
+                                        },
+                                        {
+                                            "title": "PROVIDER 2",
+                                            "value": "dee6e5ea-a359-48dd-a03c-367f5eb20a1d"
+                                        },
+                                        {
+                                            "title": "PROVIDER 3",
+                                            "value": "dc46e5ea-a359-48dd-a03c-367f5eb20a1d"
+                                        },
+                                        {
+                                            "title": "",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ],
+                            "tree_operator": "if",
+                            "event_data": {
+                                "id": 10,
+                                "title": "Провайдер",
+                                "event_code": "provider_search",
+                                "type": "search",
+                                "operators": [
+                                    {
+                                        "title": "равно",
+                                        "value": "=="
+                                    },
+                                    {
+                                        "title": "не равно",
+                                        "value": "!="
+                                    }
+                                ],
+                                "value": {
+                                    "fields": [
+                                        {
+                                            "tag": null,
+                                            "type": "select",
+                                            "title": "Провайдер",
+                                            "source": {
+                                                "type": "dynamic",
+                                                "source": "providers"
+                                            },
+                                            "values": [],
+                                            "sortval": false,
+                                            "is_multy": true,
+                                            "field_code": "provider"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "operations": [
+                        39
+                    ],
+                    "operations_data": [
+                        {
+                            "id": 39,
+                            "rule": 20,
+                            "action": 2,
+                            "fields": [
+                                {
+                                    "field_code": "airline",
+                                    "values": [
+                                        {
+                                            "title": "Uzbekistan Airways",
+                                            "value": "HY"
+                                        },
+                                        {
+                                            "title": "Turk hava yollari",
+                                            "value": "TK"
+                                        },
+                                        {
+                                            "title": "",
+                                            "value": ""
+                                        }
+                                    ]
+                                }
+                            ],
+                            "otherwise": true,
+                            "action_data": {
+                                "id": 2,
+                                "title": "Искать АК",
+                                "type": "search",
+                                "action_code": "search_airline_search",
+                                "value": {
+                                    "fields": [
+                                        {
+                                            "type": "input",
+                                            "title": "Авиакомпания",
+                                            "source": {
+                                                "type": "dynamic",
+                                                "source": "airlines"
+                                            },
+                                            "values": [],
+                                            "sortval": false,
+                                            "is_multy": true,
+                                            "field_code": "airlane"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "otherwise_operations": [],
+                    "otherwise_operations_data": [],
+                    "status": "A",
+                    "order": 1,
+                    "created_at": "2024-02-22T06:30:58.302433Z",
+                    "updated_at": "2024-02-22T06:30:58.309349Z",
+                    "reordered": [
+                        {
+                            "id": 18,
+                            "order": 2
+                        }
+                    ]
+            }
+        ]
+    },
+    "errors": []
+}

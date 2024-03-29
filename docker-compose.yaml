@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  fastapi-app:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Path to your Dockerfile for FastAPI project
+    ports:
+      - "8000:8000"
