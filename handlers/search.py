@@ -11,6 +11,8 @@ from fastapi import Request
 from additions.asyncrequest import get_user_rules
 from additions.asyncrequest import search_request_to_content
 
+from conditions.search_conditions import SearchEvents
+
 from conditions.search_conditions import provider_search
 from conditions.search_conditions import dep_airport_search
 from conditions.search_conditions import dep_cities_search
@@ -40,7 +42,7 @@ async def search(request: Request):
             "request_id": None,
             "errors": ['User rules has not been found. In this case, you cannot search for flights']
         }
-    # print("Body before rules: ", body)
+    print("Body before rules: ", body)
     print("Rules status: ", rules['status'])
     rules = rules['data']['rules']
     print(rules)
@@ -57,6 +59,7 @@ async def filter_request_data(data, rules):
 
     for rule in rules:
         if rule['status'] == 'A':
+            print("BU YERGA KIRMASLIGI KERAK AGAR STATUS L BOLSA")
             operator = '-'
             if 'and' in rule['rule']:
                 operator = 'and'
@@ -76,9 +79,11 @@ async def conditions(conditions, operator, data):
     if operator == 'and':
         for cond in conditions:
             if cond['event_data']['event_code'] == 'provider_search':
-                will_condition_be_used = will_condition_be_used and await provider_search(condition=cond, data=data)
+                ps = SearchEvents(condition=cond, data=data)
+                will_condition_be_used = will_condition_be_used and await ps.provider_search()
             elif cond['event_data']['event_code'] == 'dep_airports_search':
-                will_condition_be_used = will_condition_be_used and await dep_airport_search(condition=cond, data=data)
+                ps = SearchEvents(condition=cond, data=data)
+                will_condition_be_used = will_condition_be_used and await ps.dep_airport_search()
             else:
                 print('Condition did not match')
                 pass
