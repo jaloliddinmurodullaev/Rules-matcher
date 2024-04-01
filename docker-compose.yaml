@@ -7,3 +7,9 @@ services:
       dockerfile: Dockerfile  # Path to your Dockerfile for FastAPI project
     ports:
       - "8000:8000"
+  rules-edis-cache:
+    container_name: "content-redis-cache"
+    image: redis:latest 
+    ports:
+      - 63790:6379
+    restart: always
