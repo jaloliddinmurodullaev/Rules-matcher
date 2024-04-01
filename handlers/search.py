@@ -12,6 +12,9 @@ from additions.asyncrequest import get_user_rules
 from additions.asyncrequest import search_request_to_content
 
 from conditions.search_conditions import provider_search
+from conditions.search_conditions import dep_airport_search
+from conditions.search_conditions import dep_cities_search
+from conditions.search_conditions import dep_countries_search
 
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
@@ -43,11 +46,10 @@ async def search(request: Request):
     print(rules)
     body = copy.deepcopy(await filter_request_data(data=body, rules=rules))
     print("Body after rules: ", body)
-    # print("CONTENT URL : ", CONTENT_URL if CONTENT_URL is not None else "Rizo-oy")
-    # searchResponse = await search_request_to_content(url=CONTENT_URL + '/content/search', context=json.dumps(body))
-    # print(searchResponse)
-    # return searchResponse
-    return body
+    print("CONTENT URL : ", CONTENT_URL if CONTENT_URL is not None else "Rizo-oy")
+    searchResponse = await search_request_to_content(url=CONTENT_URL + '/content/search', context=json.dumps(body))
+    print(searchResponse)
+    return searchResponse
 
 
 async def filter_request_data(data, rules):
@@ -65,9 +67,7 @@ async def filter_request_data(data, rules):
                 new_data = copy.deepcopy(await operations(data=new_data, operations=rule['operations_data']))
             else:
                 new_data = copy.deepcopy(await otherwise_operations(data=new_data, operations=rule['otherwise_operations_data']))
-            
-            # break
-    
+                
     return new_data
 
 async def conditions(conditions, operator, data):
@@ -78,7 +78,7 @@ async def conditions(conditions, operator, data):
             if cond['event_data']['event_code'] == 'provider_search':
                 will_condition_be_used = will_condition_be_used and await provider_search(condition=cond, data=data)
             elif cond['event_data']['event_code'] == 'dep_airports_search':
-                will_condition_be_used = will_condition_be_used and await provider_search(condition=cond, data=data)
+                will_condition_be_used = will_condition_be_used and await dep_airport_search(condition=cond, data=data)
             else:
                 print('Condition did not match')
                 pass
@@ -93,7 +93,7 @@ async def conditions(conditions, operator, data):
                     will_condition_be_used = False
             elif cond['event_data']['event_code'] == 'dep_airports_search':
                 print("True")
-                if await provider_search(condition=cond, data=data):
+                if await dep_airport_search(condition=cond, data=data):
                     will_condition_be_used = True
                     return will_condition_be_used
                 else:
@@ -105,7 +105,7 @@ async def conditions(conditions, operator, data):
                 return await provider_search(condition=cond, data=data)
             if cond['event_data']['event_code'] == 'dep_airports_search':
                 print(True)
-                return await provider_search(condition=cond, data=data)
+                return await dep_airport_search(condition=cond, data=data)
     
     return will_condition_be_used
 
