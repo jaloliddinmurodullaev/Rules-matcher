@@ -28,7 +28,7 @@ async def send_post_request(url, headers, params, context):
 # This function is for getting user rules
 async def get_user_rules(url, headers=None, params=None, context=None):
     userRules = await send_get_request(url=url, headers=headers, params=params, context=context)
-    return userRules
+    return userRules[1]
 
 # This function is for searching available tickets
 async def search_request_to_content(url, headers=None, params=None, context=None):
