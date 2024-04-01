@@ -1,15 +1,24 @@
-version: '3'
+version: '3.8'
 
 services:
-  fastapi-app:
+  rules_matcher_app:
+    image: rules_matcher:0.0.1
+    container_name: rules_matcher_app
+    depends_on:
+      - rules_redis
     build:
-      context: .
-      dockerfile: Dockerfile  # Path to your Dockerfile for FastAPI project
+      context: ./
+    volumes:
+      - ./:/app
     ports:
-      - "8000:8000"
-  rules-edis-cache:
-    container_name: "content-redis-cache"
+      - "7000:8001"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  rules_redis:
+    container_name: "rules_redis"
     image: redis:latest 
     ports:
-      - 63790:6379
+      - 63791:6379
     restart: always
+    

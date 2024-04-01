@@ -1,20 +1,20 @@
-FROM python:3.10
-
-# Set the working directory to /app
-WORKDIR /app
-
-# Copy   the current directory contents into the container at /app
-COPY . .
-
-# Install any needed packages specified in requirements.txt
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
-
-# Make port 8000 available to the world outside this container
-EXPOSE 8000
+FROM python:3.11 as compiler
 
 # Define environment variable
 ENV PYTHONUNBUFFERED 1
 
+# Set the working directory to /app
+WORKDIR /app
+
+RUN python3 -m venv /opt/venv
+# Enable venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+COPY ./requirements.txt /app/requirements.txt
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+
 # Run app.py when the container launches
-CMD ["uvicorn", "run:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "run:app", "--reload", "--host", "0.0.0.0", "--port", "8001"]
