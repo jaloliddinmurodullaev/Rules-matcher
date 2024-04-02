@@ -44,6 +44,8 @@ class SearchEvents:
             if field['field_code'] == 'airport':
                 airports_to_be_checked = copy.deepcopy(field['values'])
 
+        print("LALALA:", airports_to_be_checked)
+
         for direction in data['directions']:
             for dep_airport in airports_to_be_checked:
                 if condition_operator == "==":
@@ -137,7 +139,7 @@ async def provider_search(condition, data):
     return res
 
 async def dep_airport_search(condition, data):
-    res = True
+    res = False
     condition_operator = condition['operator']['value']
     airports_to_be_checked = []
 
@@ -148,12 +150,14 @@ async def dep_airport_search(condition, data):
     for direction in data['directions']:
         for dep_airport in airports_to_be_checked:
             if condition_operator == "==":
+                print(dep_airport['value'])
+                print(direction['departure'])
                 if dep_airport['value'] == direction['departure']:
-                    print("YES MAN")
+                    print("YES MANNNN")
                     return True
             elif condition_operator == "!=":
                 if dep_airport['value'] != direction['departure']:
-                    print("YES MAN 1")
+                    print("YES MANNNN 1")
                     res = True
                 else:
                     res = False

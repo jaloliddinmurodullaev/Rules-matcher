@@ -22,7 +22,10 @@ router = APIRouter(
 # offers handler to get flight offers that are searched before and applying user rules
 @router.post("/")
 async def offers(request: Request):
+    print("LALALAL")
     body = await request.json()
+    print("Body Offers: ", body)
     print("CONTENT URL : ", CONTENT_URL if CONTENT_URL is not None else "Rizo-oy")
     offerResponse = await offers_request_to_content(url=CONTENT_URL + '/content/offers', context=json.dumps(body))
+    print(offerResponse['status'])
     return offerResponse
